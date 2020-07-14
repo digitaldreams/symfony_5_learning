@@ -8,6 +8,7 @@ use App\Entity\Contact;
 use App\Repository\ContactRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ContactController extends AbstractController
 {
@@ -54,11 +55,13 @@ class ContactController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\HttpFoundation\Request                 $request
+     *
+     * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request,ValidatorInterface $validator)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $contact = new Contact();

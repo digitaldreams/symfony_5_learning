@@ -12,6 +12,8 @@ show_contact:
     path: /contact/{id}
     controller: App\Controller\ContactController::show
     methods: GET|HEAD
+    requirements:
+        id: '\d+'
 
 create_contact:
   path: /contacts/create
@@ -22,6 +24,8 @@ edit_contact:
   path: /contacts/{id}/edit
   controller: App\Controller\ContactController::edit
   methods: GET|HEAD
+  requirements:
+    id: '\d+'
 
 save_contact:
     path: /contacts
@@ -32,9 +36,13 @@ update_contact:
     path: /contacts/{id}
     controller: App\Controller\ContactController::update
     methods: PUT
+    requirements:
+      id: '\d+'
 
 destroy_contact:
     path: /contacts/{id}
     controller: App\Controller\ContactController::destroy
     methods: DELETE
+    requirements:
+      id: '\d+'
 
