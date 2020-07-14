@@ -7,7 +7,7 @@ namespace App\Controller;
 use App\Entity\Contact;
 use App\Repository\ContactRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 class ContactController extends AbstractController
 {
@@ -17,18 +17,6 @@ class ContactController extends AbstractController
         return $this->render('contact/index.html.twig', [
             'contacts' => $contactRepository->findAll(),
         ]);
-    }
-
-    public function create()
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $contact = new Contact();
-        $contact->setName('Najmul Hossain');
-        $contact->setEmail('najmul18@gmail.com');
-        $contact->setPhoneNumber('+8801925000036');
-        $entityManager->persist($contact);
-        $entityManager->flush();
-        return new Response('Contact saved successfully wit id ' . $contact->getId());
     }
 
     /**
@@ -41,6 +29,82 @@ class ContactController extends AbstractController
         return $this->render('contact/show.html.twig', [
             'contact' => $contact,
         ]);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function create()
+    {
+        return $this->render('contact/create.html.twig', [
+            'contact' => new Contact(),
+        ]);
+    }
+
+    /**
+     * @param \App\Entity\Contact $contact
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function edit(Contact $contact)
+    {
+        return $this->render('contact/edit.html.twig', [
+            'contact' => $contact,
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function store(Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $contact = new Contact();
+        $contact->setName($request->get('name'));
+        $contact->setEmail($request->get('email'));
+        $contact->setPhoneNumber($request->get('phone_number'));
+        $entityManager->persist($contact);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('show_contact', [
+            'id' => $contact->getId(),
+        ]);
+    }
+
+    /**
+     * @param \App\Entity\Contact                       $contact
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function update(Contact $contact, Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $contact->setName($request->get('name'));
+        $contact->setEmail($request->get('email'));
+        $contact->setPhoneNumber($request->get('phone_number'));
+        $entityManager->persist($contact);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('show_contact', [
+            'id' => $contact->getId(),
+        ]);
+    }
+
+    /**
+     * @param \App\Entity\Contact $contact
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function destroy(Contact $contact)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($contact);
+        $entityManager->flush();
+        return $this->redirectToRoute('index_contact');
     }
 
 }

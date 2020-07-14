@@ -1,15 +1,40 @@
-index:
+home_page:
     path: /
     controller: App\Controller\FrontController::homePage
+    methods: GET|HEAD
 
 index_contact:
     path: /contacts
     controller: App\Controller\ContactController::index
-
-save_contact:
-    path: /contact/create
-    controller: App\Controller\ContactController::create
+    methods: GET|HEAD
 
 show_contact:
     path: /contact/{id}
     controller: App\Controller\ContactController::show
+    methods: GET|HEAD
+
+create_contact:
+  path: /contacts/create
+  controller: App\Controller\ContactController::create
+  methods: GET|HEAD
+
+edit_contact:
+  path: /contacts/{id}/edit
+  controller: App\Controller\ContactController::edit
+  methods: GET|HEAD
+
+save_contact:
+    path: /contacts
+    controller: App\Controller\ContactController::store
+    methods: POST
+
+update_contact:
+    path: /contacts/{id}
+    controller: App\Controller\ContactController::update
+    methods: PUT
+
+destroy_contact:
+    path: /contacts/{id}
+    controller: App\Controller\ContactController::destroy
+    methods: DELETE
+

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('index_contact') }}"> Contacts </a>
+    </li>
+    <li class="breadcrumb-item ">
+        <a href="{{ path('show_contact',{id : contact.id }) }}"> {{ contact.name }}
+        </a>
+    </li>
+    <li class="breadcrumb-item active">
+        Edit
+    </li>
+{% endblock %}
+
+{% block body %}
+    <h3>Update {{ contact.getName() }}</h3>
+    <form action="{{ path('update_contact',{id : contact.id}) }}" method="post">
+        <input type="hidden" name="_method" value="PUT">
+        <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" class="form-control" name="name" value="{{ contact.name }}" required
+                   placeholder="e.g. John Doe">
+        </div>
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" class="form-control" name="email" value="{{ contact.email }}" required
+                   placeholder="e.g. johdoe@example.com">
+        </div>
+        <div class="form-group">
+            <label>Phone Number</label>
+            <input type="text" class="form-control" name="phone_number" value="{{ contact.phoneNumber }}" required
+                   placeholder="e.g. +880 123 4578 7895">
+        </div>
+        <div class="form-group text-right">
+            <input type="submit" value="Save" class="btn btn-primary">
+        </div>
+    </form>
+{% endblock %}

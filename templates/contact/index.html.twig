@@ -1,4 +1,9 @@
 {% extends 'base.html.twig' %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">Contacts</li>
+{% endblock %}
+
 {% block body %}
     <table class="table table-responsive table-striped table-hover">
         <thead>
@@ -18,11 +23,12 @@
                 <td>{{ contact.email }}</td>
                 <td>{{ contact.phoneNumber }}</td>
                 <td>
-                    <a href="">Edit</a>
-                    <a href="">Delete</a>
+                    <a href="{{ path('edit_contact',{id: contact.id}) }}">Edit</a>
+                    <a href="{{ path('destroy_contact',{id: contact.id}) }}">Delete</a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+    <a href="{{ path('create_contact') }}">Create new Contact</a>
 {% endblock %}

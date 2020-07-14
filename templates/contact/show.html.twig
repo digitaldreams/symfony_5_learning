@@ -1,4 +1,14 @@
 {% extends 'base.html.twig' %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('index_contact') }}"> Contacts </a>
+    </li>
+    <li class="breadcrumb-item active">
+        {{ contact.name }}
+    </li>
+{% endblock %}
+
 {% block body %}
     <ul class="list-group text-center">
         <li class="list-group-item">Name : {{ contact.name }}</li>
