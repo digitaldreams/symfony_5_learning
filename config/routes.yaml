@@ -2,6 +2,10 @@ index:
     path: /
     controller: App\Controller\FrontController::homePage
 
+index_contact:
+    path: /contacts
+    controller: App\Controller\ContactController::index
+
 save_contact:
     path: /contact/create
     controller: App\Controller\ContactController::create

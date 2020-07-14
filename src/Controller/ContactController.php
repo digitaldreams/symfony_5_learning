@@ -11,12 +11,20 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ContactController extends AbstractController
 {
+
+    public function index(ContactRepository $contactRepository)
+    {
+        return $this->render('contact/index.html.twig', [
+            'contacts' => $contactRepository->findAll(),
+        ]);
+    }
+
     public function create()
     {
         $entityManager = $this->getDoctrine()->getManager();
         $contact = new Contact();
-        $contact->setName('Tuhin Bepari');
-        $contact->setEmail('digitaldreams40@gmail.com');
+        $contact->setName('Najmul Hossain');
+        $contact->setEmail('najmul18@gmail.com');
         $contact->setPhoneNumber('+8801925000036');
         $entityManager->persist($contact);
         $entityManager->flush();
@@ -24,24 +32,14 @@ class ContactController extends AbstractController
     }
 
     /**
-     * @param int                               $id
-     *
-     * @param \App\Repository\ContactRepository $contactRepository
+     * @param \App\Entity\Contact $contact
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function show(int $id, ContactRepository $contactRepository)
+    public function show(Contact $contact)
     {
-        $contact = $contactRepository->find($id);
-
-        if (!$contact) {
-            throw $this->createNotFoundException('No contact found for id: ' . $id);
-        }
-
         return $this->render('contact/show.html.twig', [
-            'name' => $contact->getName(),
-            'email' => $contact->getEmail(),
-            'phone_number' => $contact->getPhoneNumber(),
+            'contact' => $contact,
         ]);
     }
 
