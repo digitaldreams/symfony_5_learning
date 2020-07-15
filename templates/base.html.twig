@@ -15,6 +15,14 @@
         <h1>My First symfony site.</h1>
     </header>
 
+    {% if app.request.hasPreviousSession %}
+        {% for message in app.flashes('message') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
             <a href="{{ path('home_page') }}"> Home</a>

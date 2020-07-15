@@ -46,6 +46,8 @@ class RegisterController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-        return $this->redirectToRoute('index_contact');
+        $this->addFlash('message', 'You have successfully registered. You can log in now with username. ' . $user->getUsername());
+
+        return $this->redirectToRoute('app_login');
     }
 }

@@ -97,6 +97,8 @@ class ContactController extends AbstractController
         $entityManager->persist($contact);
         $entityManager->flush();
 
+        $this->addFlash('message', 'Contact successfully created');
+
         return $this->redirectToRoute('show_contact', [
             'id' => $contact->getId(),
         ]);
@@ -131,6 +133,8 @@ class ContactController extends AbstractController
         $entityManager->persist($contact);
         $entityManager->flush();
 
+        $this->addFlash('message', 'Contact successfully updated');
+
         return $this->redirectToRoute('show_contact', [
             'id' => $contact->getId(),
         ]);
@@ -148,6 +152,9 @@ class ContactController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($contact);
         $entityManager->flush();
+
+        $this->addFlash('message', 'Contact successfully deleted');
+
         return $this->redirectToRoute('index_contact');
     }
 
