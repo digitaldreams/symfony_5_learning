@@ -1,10 +1,18 @@
 {% extends 'base.html.twig' %}
+{% block breadcrumb %}
+    <li class="breadcrumb-item">
+        <a href="{{ path('index_contact') }}">Contacts</a>
+    </li>
+    <li class="breadcrumb-item active">Create New contact</li>
+{% endblock %}
+
 {% block body %}
     <h3>Create New Contact</h3>
     {% if(errors|length > 0) %}
         <ul class="list-group">
             {% for error in errors %}
-                <li class="list-group-item list-group-item-danger"><b>{{ error.propertyPath }}</b> - {{ error.message }}</li>
+                <li class="list-group-item list-group-item-danger"><b>{{ error.propertyPath }}</b> - {{ error.message }}
+                </li>
             {% endfor %}
         </ul>
     {% endif %}
