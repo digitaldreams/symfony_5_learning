@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+
+
+    <div class="example-wrapper">
+        <h1>Register</h1>
+        <form action="{{ path('register.store') }}" method="post">
+            {% if(errors|length > 0) %}
+                <ul class="list-group">
+                    {% for error in errors %}
+                        <li class="list-group-item list-group-item-danger"><b>{{ error.propertyPath }}</b> - {{ error.message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" class="form-control" name="name" placeholder="e.g. Joh Doe" required>
+            </div>
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" class="form-control" name="email" required placeholder="e.g. johndoe@example.com">
+            </div>
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" class="form-control" name="username" required placeholder="e.g. johndoe">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" name="password" required
+                       placeholder="type your 6 character long password">
+            </div>
+            <div class="form-group text-right">
+                <input type="submit" class="btn btn-primary" value="Register">
+            </div>
+
+        </form>
+
+    </div>
+{% endblock %}
