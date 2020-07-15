@@ -1,6 +1,14 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     <h3>Create New Contact</h3>
+    {% if(errors|length > 0) %}
+        <ul class="list-group">
+            {% for error in errors %}
+                <li class="list-group-item list-group-item-danger"><b>{{ error.propertyPath }}</b> - {{ error.message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
     <form action="{{ path('save_contact') }}" method="post">
         <div class="form-group">
             <label>Full Name</label>
@@ -14,7 +22,7 @@
         </div>
         <div class="form-group">
             <label>Phone Number</label>
-            <input type="text" class="form-control" name="phone_number" value="{{ contact.phoneNumber }}" required
+            <input type="text" class="form-control" name="phone_number" value="{{ contact.phoneNumber }}"
                    placeholder="e.g. +880 123 4578 7895">
         </div>
         <div class="form-group text-right">

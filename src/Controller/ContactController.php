@@ -39,6 +39,7 @@ class ContactController extends AbstractController
     {
         return $this->render('contact/create.html.twig', [
             'contact' => new Contact(),
+            'errors' => [],
         ]);
     }
 
@@ -51,6 +52,7 @@ class ContactController extends AbstractController
     {
         return $this->render('contact/edit.html.twig', [
             'contact' => $contact,
+            'errors' => [],
         ]);
     }
 
@@ -59,15 +61,25 @@ class ContactController extends AbstractController
      *
      * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse| \Symfony\Component\HttpFoundation\Response
      */
-    public function store(Request $request,ValidatorInterface $validator)
+    public function store(Request $request, ValidatorInterface $validator)
     {
-        $entityManager = $this->getDoctrine()->getManager();
+
         $contact = new Contact();
         $contact->setName($request->get('name'));
         $contact->setEmail($request->get('email'));
         $contact->setPhoneNumber($request->get('phone_number'));
+        $errors = $validator->validate($contact);
+
+        if (count($errors) > 0) {
+            return $this->render('contact/create.html.twig', [
+                'errors' => $errors,
+                'contact' => $contact,
+            ]);
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($contact);
         $entityManager->flush();
 
@@ -77,18 +89,29 @@ class ContactController extends AbstractController
     }
 
     /**
-     * @param \App\Entity\Contact                       $contact
+     * @param \App\Entity\Contact                                       $contact
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\HttpFoundation\Request                 $request
+     *
+     * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function update(Contact $contact, Request $request)
+    public function update(Contact $contact, Request $request, ValidatorInterface $validator)
     {
-        $entityManager = $this->getDoctrine()->getManager();
         $contact->setName($request->get('name'));
         $contact->setEmail($request->get('email'));
         $contact->setPhoneNumber($request->get('phone_number'));
+
+        $errors = $validator->validate($contact);
+        if (count($errors) > 0) {
+            return $this->render('contact/edit.html.twig', [
+                'errors' => $errors,
+                'contact' => $contact,
+            ]);
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($contact);
         $entityManager->flush();
 

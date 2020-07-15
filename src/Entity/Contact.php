@@ -35,7 +35,7 @@ class Contact
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
-     * @Assert\IsNull
+     * @Assert\Blank
      */
     private $phone_number;
 
